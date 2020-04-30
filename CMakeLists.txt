@@ -85,7 +85,7 @@ elseif( CATKIN_DEVEL_PREFIX OR CATKIN_BUILD_BINARY_PACKAGE)
 
     set(catkin_FOUND 1)
     add_definitions( -DUSING_ROS )
-    find_package(catkin REQUIRED COMPONENTS roslib)
+    find_package(catkin REQUIRED)
     find_package(GTest)
 
     message(STATUS "------------------------------------------")
@@ -95,8 +95,8 @@ elseif( CATKIN_DEVEL_PREFIX OR CATKIN_BUILD_BINARY_PACKAGE)
     catkin_package(
         INCLUDE_DIRS include # do not include "3rdparty" here
         LIBRARIES ${BEHAVIOR_TREE_LIBRARY}
-        CATKIN_DEPENDS roslib
-        )
+        CATKIN_DEPENDS 
+    )
 
     list(APPEND BEHAVIOR_TREE_EXTERNAL_LIBRARIES ${catkin_LIBRARIES})
     set(BUILD_TOOL_INCLUDE_DIRS ${catkin_INCLUDE_DIRS})
