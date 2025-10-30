@@ -1,5 +1,9 @@
 var NAVTREEINDEX2 =
 {
+"db/d6b/struct_b_t_1_1_ast_1_1_expr_if.html":[1,0,0,0,5],
+"db/d6e/struct_b_t_1_1_ast_1_1_expr_base.html":[1,0,0,0,2],
+"db/d78/struct_b_t_1_1_ast_1_1_expr_assignment.html":[1,0,0,0,1],
+"db/d7e/leaf__node_8h_source.html":[2,0,0,0,18],
 "db/d81/bt__factory_8h_source.html":[2,0,0,0,11],
 "db/d84/pop__from__queue_8hpp_source.html":[2,0,0,0,0,2],
 "db/d85/bt__parser_8h_source.html":[2,0,0,0,12],
