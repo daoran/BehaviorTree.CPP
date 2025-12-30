@@ -166,8 +166,8 @@ $(document).ready(function(){initNavTree('d2/dbf/timer__queue_8h_source.html','.
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span><span class="comment">//  - Handlers are ALWAYS executed in the Timer Queue worker thread.</span></div>
 <div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span><span class="comment">//  - Handlers execution order is NOT guaranteed</span></div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span><span class="comment">//</span></div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> _Clock = std::chrono::steady_clock,</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>          <span class="keyword">typename</span> _Duration = std::chrono::steady_clock::duration&gt;</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> ClockT = std::chrono::steady_clock,</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>          <span class="keyword">typename</span> DurationT = std::chrono::steady_clock::duration&gt;</div>
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span><span class="keyword">class</span> <a class="code hl_class" href="../../df/d4c/class_b_t_1_1_timer_queue.html">TimerQueue</a></div>
 <div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>{</div>
 <div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="keyword">public</span>:</div>
@@ -191,10 +191,10 @@ $(document).ready(function(){initNavTree('d2/dbf/timer__queue_8h_source.html','.
 <div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>  <span class="comment">// \return</span></div>
 <div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>  <span class="comment">//  Returns the ID of the new timer. You can use this ID to cancel the</span></div>
 <div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>  <span class="comment">// timer</span></div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>  uint64_t <a class="code hl_function" href="../../df/d4c/class_b_t_1_1_timer_queue.html#a386ac8a89de8315a3f81cb5e88c30cac">add</a>(std::chrono::milliseconds milliseconds, std::function&lt;<span class="keywordtype">void</span>(<span class="keywordtype">bool</span>)&gt; handler)</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>  uint64_t <a class="code hl_function" href="../../df/d4c/class_b_t_1_1_timer_queue.html#aab95a86842b3bee5395931409cd1abbe">add</a>(std::chrono::milliseconds milliseconds, std::function&lt;<span class="keywordtype">void</span>(<span class="keywordtype">bool</span>)&gt; handler)</div>
 <div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>  {</div>
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    WorkItem item;</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    item.end = _Clock::now() + milliseconds;</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    item.end = ClockT::now() + milliseconds;</div>
 <div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    item.handler = std::move(handler);</div>
 <div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span> </div>
 <div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    std::unique_lock&lt;std::mutex&gt; lk(m_mtx);</div>
@@ -213,7 +213,7 @@ $(document).ready(function(){initNavTree('d2/dbf/timer__queue_8h_source.html','.
 <div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>  <span class="comment">//  1 if the timer was cancelled.</span></div>
 <div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>  <span class="comment">//  0 if you were too late to cancel (or the timer ID was never valid to</span></div>
 <div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>  <span class="comment">// start with)</span></div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>  <a class="code hl_function" href="../../df/d4c/class_b_t_1_1_timer_queue.html#a5564436f2a8e071bfdf59be5daea279a">size_t</a> <a class="code hl_function" href="../../df/d4c/class_b_t_1_1_timer_queue.html#a5564436f2a8e071bfdf59be5daea279a">cancel</a>(<a class="code hl_function" href="../../df/d4c/class_b_t_1_1_timer_queue.html#a5564436f2a8e071bfdf59be5daea279a">uint64_t</a> <a class="code hl_function" href="../../df/d4c/class_b_t_1_1_timer_queue.html#a5564436f2a8e071bfdf59be5daea279a">id</a>)</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>  <a class="code hl_function" href="../../df/d4c/class_b_t_1_1_timer_queue.html#aa0f1e7533369e4f6bb2173d9e78d2259">size_t</a> <a class="code hl_function" href="../../df/d4c/class_b_t_1_1_timer_queue.html#aa0f1e7533369e4f6bb2173d9e78d2259">cancel</a>(<a class="code hl_function" href="../../df/d4c/class_b_t_1_1_timer_queue.html#aa0f1e7533369e4f6bb2173d9e78d2259">uint64_t</a> <a class="code hl_function" href="../../df/d4c/class_b_t_1_1_timer_queue.html#aa0f1e7533369e4f6bb2173d9e78d2259">id</a>)</div>
 <div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>  {</div>
 <div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    <span class="comment">// Instead of removing the item from the container (thus breaking the</span></div>
 <div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    <span class="comment">// heap integrity), we set the item as having no handler, and put</span></div>
@@ -227,7 +227,7 @@ $(document).ready(function(){initNavTree('d2/dbf/timer__queue_8h_source.html','.
 <div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>      {</div>
 <div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>        WorkItem newItem;</div>
 <div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>        <span class="comment">// Zero time, so it stays at the top for immediate execution</span></div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>        newItem.end = std::chrono::time_point&lt;_Clock, _Duration&gt;();</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>        newItem.end = std::chrono::time_point&lt;ClockT, DurationT&gt;();</div>
 <div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>        newItem.id = 0;  <span class="comment">// Means it is a canceled item</span></div>
 <div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>        <span class="comment">// Move the handler from item to newItem.</span></div>
 <div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>        <span class="comment">// Also, we need to manually set the handler to nullptr, since</span></div>
@@ -250,7 +250,7 @@ $(document).ready(function(){initNavTree('d2/dbf/timer__queue_8h_source.html','.
 <div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>  <span class="comment">//! Cancels all timers</span></div>
 <div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>  <span class="comment">// \return</span></div>
 <div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>  <span class="comment">//  The number of timers cancelled</span></div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>  <a class="code hl_function" href="../../df/d4c/class_b_t_1_1_timer_queue.html#a663265e8c343946094e5d16a1b59d483">size_t</a> <a class="code hl_function" href="../../df/d4c/class_b_t_1_1_timer_queue.html#a663265e8c343946094e5d16a1b59d483">cancelAll</a>()</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>  <a class="code hl_function" href="../../df/d4c/class_b_t_1_1_timer_queue.html#a8bd9cbfcbf78991b017f9f7efe728149">size_t</a> <a class="code hl_function" href="../../df/d4c/class_b_t_1_1_timer_queue.html#a8bd9cbfcbf78991b017f9f7efe728149">cancelAll</a>()</div>
 <div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>  {</div>
 <div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>    <span class="comment">// Setting all &quot;end&quot; to 0 (for immediate execution) is ok,</span></div>
 <div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>    <span class="comment">// since it maintains the heap integrity</span></div>
@@ -259,7 +259,7 @@ $(document).ready(function(){initNavTree('d2/dbf/timer__queue_8h_source.html','.
 <div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>    {</div>
 <div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>      <span class="keywordflow">if</span>(item.id)</div>
 <div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>      {</div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>        item.end = std::chrono::time_point&lt;_Clock, _Duration&gt;();</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>        item.end = std::chrono::time_point&lt;ClockT, DurationT&gt;();</div>
 <div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>        item.id = 0;</div>
 <div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>      }</div>
 <div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>    }</div>
@@ -270,111 +270,113 @@ $(document).ready(function(){initNavTree('d2/dbf/timer__queue_8h_source.html','.
 <div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>    <span class="keywordflow">return</span> ret;</div>
 <div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>  }</div>
 <div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span> </div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>  TimerQueue(<span class="keyword">const</span> <a class="code hl_class" href="../../df/d4c/class_b_t_1_1_timer_queue.html">TimerQueue</a>&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>  <a class="code hl_class" href="../../df/d4c/class_b_t_1_1_timer_queue.html">TimerQueue</a>&amp; operator=(<span class="keyword">const</span> <a class="code hl_class" href="../../df/d4c/class_b_t_1_1_timer_queue.html">TimerQueue</a>&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span> </div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>  <span class="keywordtype">void</span> run()</div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>  {</div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>    <span class="keywordflow">while</span>(!m_finish.load())</div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>    {</div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>      <span class="keyword">auto</span> end = calcWaitTime();</div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>      <span class="keywordflow">if</span>(end.first)</div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>      {</div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>        <span class="comment">// Timers found, so wait until it expires (or something else</span></div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>        <span class="comment">// changes)</span></div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>        m_checkWork.waitUntil(end.second);</div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>      }</div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>      <span class="keywordflow">else</span></div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>      {</div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>        <span class="comment">// No timers exist, so wait an arbitrary amount of time</span></div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>        m_checkWork.waitUntil(_Clock::now() + std::chrono::milliseconds(10));</div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>      }</div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span> </div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>      <span class="comment">// Check and execute as much work as possible, such as, all expired</span></div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>      <span class="comment">// timers</span></div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>      checkWork();</div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>    }</div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span> </div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>    <span class="comment">// If we are shutting down, we should not have any items left,</span></div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>    <span class="comment">// since the shutdown cancels all items</span></div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>    assert(m_items.size() == 0);</div>
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>  }</div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span> </div>
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>  std::pair&lt;<span class="keywordtype">bool</span>, std::chrono::time_point&lt;_Clock, _Duration&gt;&gt; calcWaitTime()</div>
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>  {</div>
-<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>    std::lock_guard&lt;std::mutex&gt; lk(m_mtx);</div>
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>    <span class="keywordflow">while</span>(m_items.size())</div>
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>    {</div>
-<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>      <span class="keywordflow">if</span>(m_items.top().handler)</div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>      {</div>
-<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>        <span class="comment">// Item present, so return the new wait time</span></div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>        <span class="keywordflow">return</span> std::make_pair(<span class="keyword">true</span>, m_items.top().end);</div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>      }</div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>      <span class="keywordflow">else</span></div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>      {</div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>        <span class="comment">// Discard empty handlers (they were cancelled)</span></div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>        m_items.pop();</div>
-<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>      }</div>
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>    }</div>
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span> </div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>    <span class="comment">// No items found, so return no wait time (causes the thread to wait</span></div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>    <span class="comment">// indefinitely)</span></div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>    <span class="keywordflow">return</span> std::make_pair(<span class="keyword">false</span>, std::chrono::time_point&lt;_Clock, _Duration&gt;());</div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>  }</div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span> </div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>  <span class="keywordtype">void</span> checkWork()</div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>  {</div>
-<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>    std::unique_lock&lt;std::mutex&gt; lk(m_mtx);</div>
-<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>    <span class="keywordflow">while</span>(m_items.size() &amp;&amp; m_items.top().end &lt;= _Clock::now())</div>
-<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>    {</div>
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>      WorkItem item(std::move(m_items.top()));</div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>      m_items.pop();</div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span> </div>
-<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>      lk.unlock();</div>
-<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>      <span class="keywordflow">if</span>(item.handler)</div>
-<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>      {</div>
-<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>        item.handler(item.id == 0);</div>
-<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>      }</div>
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>      lk.lock();</div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>    }</div>
-<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>  }</div>
-<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span> </div>
-<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>  <a class="code hl_namespace" href="../../df/da8/namespace_b_t_1_1details.html">details</a>::<a class="code hl_class" href="../../d9/d24/class_b_t_1_1details_1_1_semaphore.html">Semaphore</a> m_checkWork;</div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>  std::thread m_thread;</div>
-<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>  std::atomic_bool m_finish = <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>  uint64_t m_idcounter = 0;</div>
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span> </div>
-<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>  <span class="keyword">struct</span> WorkItem</div>
-<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>  {</div>
-<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>    std::chrono::time_point&lt;_Clock, _Duration&gt; end;</div>
-<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>    uint64_t id;  <span class="comment">// id==0 means it was cancelled</span></div>
-<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>    std::function&lt;<span class="keywordtype">void</span>(<span class="keywordtype">bool</span>)&gt; handler;</div>
-<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>    <span class="keywordtype">bool</span> operator&gt;(<span class="keyword">const</span> WorkItem&amp; other) <span class="keyword">const</span></div>
-<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>    {</div>
-<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>      <span class="keywordflow">return</span> end &gt; other.end;</div>
-<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>    }</div>
-<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>  };</div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span> </div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>  std::mutex m_mtx;</div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>  <span class="comment">// Inheriting from priority_queue, so we can access the internal container</span></div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>  <span class="keyword">class</span> Queue</div>
-<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>    : <span class="keyword">public</span> std::priority_queue&lt;WorkItem, std::vector&lt;WorkItem&gt;, std::greater&lt;WorkItem&gt;&gt;</div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>  {</div>
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>  <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>    std::vector&lt;WorkItem&gt;&amp; getContainer()</div>
-<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>    {</div>
-<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>      <span class="keywordflow">return</span> <span class="keyword">this</span>-&gt;c;</div>
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>    }</div>
-<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>  } m_items;</div>
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>};</div>
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>}  <span class="comment">// namespace BT</span></div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>  TimerQueue(<span class="keyword">const</span> <a class="code hl_class" href="../../df/d4c/class_b_t_1_1_timer_queue.html">TimerQueue</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>  <a class="code hl_class" href="../../df/d4c/class_b_t_1_1_timer_queue.html">TimerQueue</a>&amp; operator=(<span class="keyword">const</span> <a class="code hl_class" href="../../df/d4c/class_b_t_1_1_timer_queue.html">TimerQueue</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>  TimerQueue(<a class="code hl_class" href="../../df/d4c/class_b_t_1_1_timer_queue.html">TimerQueue</a>&amp;&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>  <a class="code hl_class" href="../../df/d4c/class_b_t_1_1_timer_queue.html">TimerQueue</a>&amp; operator=(<a class="code hl_class" href="../../df/d4c/class_b_t_1_1_timer_queue.html">TimerQueue</a>&amp;&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span> </div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>  <span class="keywordtype">void</span> run()</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>  {</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>    <span class="keywordflow">while</span>(!m_finish.load())</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>    {</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>      <span class="keyword">auto</span> end = calcWaitTime();</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>      <span class="keywordflow">if</span>(end.first)</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>      {</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>        <span class="comment">// Timers found, so wait until it expires (or something else</span></div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>        <span class="comment">// changes)</span></div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>        m_checkWork.waitUntil(end.second);</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>      }</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>      <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>      {</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>        <span class="comment">// No timers exist, so wait an arbitrary amount of time</span></div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>        m_checkWork.waitUntil(ClockT::now() + std::chrono::milliseconds(10));</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>      }</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span> </div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>      <span class="comment">// Check and execute as much work as possible, such as, all expired</span></div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>      <span class="comment">// timers</span></div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>      checkWork();</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>    }</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span> </div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>    <span class="comment">// If we are shutting down, we should not have any items left,</span></div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>    <span class="comment">// since the shutdown cancels all items</span></div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>    assert(m_items.size() == 0);</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>  }</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span> </div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>  std::pair&lt;<span class="keywordtype">bool</span>, std::chrono::time_point&lt;ClockT, DurationT&gt;&gt; calcWaitTime()</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>  {</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>    std::lock_guard&lt;std::mutex&gt; lk(m_mtx);</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>    <span class="keywordflow">while</span>(m_items.size())</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>    {</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>      <span class="keywordflow">if</span>(m_items.top().handler)</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>      {</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>        <span class="comment">// Item present, so return the new wait time</span></div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>        <span class="keywordflow">return</span> std::make_pair(<span class="keyword">true</span>, m_items.top().end);</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>      }</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>      <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>      {</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>        <span class="comment">// Discard empty handlers (they were cancelled)</span></div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>        m_items.pop();</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>      }</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>    }</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span> </div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>    <span class="comment">// No items found, so return no wait time (causes the thread to wait</span></div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>    <span class="comment">// indefinitely)</span></div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>    <span class="keywordflow">return</span> std::make_pair(<span class="keyword">false</span>, std::chrono::time_point&lt;ClockT, DurationT&gt;());</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>  }</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span> </div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>  <span class="keywordtype">void</span> checkWork()</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>  {</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>    std::unique_lock&lt;std::mutex&gt; lk(m_mtx);</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>    <span class="keywordflow">while</span>(m_items.size() &amp;&amp; m_items.top().end &lt;= ClockT::now())</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>    {</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>      WorkItem item(std::move(m_items.top()));</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>      m_items.pop();</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span> </div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>      lk.unlock();</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>      <span class="keywordflow">if</span>(item.handler)</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>      {</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>        item.handler(item.id == 0);</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>      }</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>      lk.lock();</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>    }</div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>  }</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span> </div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>  <a class="code hl_namespace" href="../../df/da8/namespace_b_t_1_1details.html">details</a>::<a class="code hl_class" href="../../d9/d24/class_b_t_1_1details_1_1_semaphore.html">Semaphore</a> m_checkWork;</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>  std::thread m_thread;</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>  std::atomic_bool m_finish = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>  uint64_t m_idcounter = 0;</div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span> </div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>  <span class="keyword">struct</span> WorkItem</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>  {</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>    std::chrono::time_point&lt;ClockT, DurationT&gt; end;</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>    uint64_t id = 0;  <span class="comment">// id==0 means it was cancelled</span></div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>    std::function&lt;<span class="keywordtype">void</span>(<span class="keywordtype">bool</span>)&gt; handler;</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>    <span class="keywordtype">bool</span> operator&gt;(<span class="keyword">const</span> WorkItem&amp; other) <span class="keyword">const</span></div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>    {</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>      <span class="keywordflow">return</span> end &gt; other.end;</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>    }</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>  };</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span> </div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>  std::mutex m_mtx;</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>  <span class="comment">// Inheriting from priority_queue, so we can access the internal container</span></div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>  <span class="keyword">class</span> Queue</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>    : <span class="keyword">public</span> std::priority_queue&lt;WorkItem, std::vector&lt;WorkItem&gt;, std::greater&lt;WorkItem&gt;&gt;</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>  {</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>  <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>    std::vector&lt;WorkItem&gt;&amp; getContainer()</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>    {</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>      <span class="keywordflow">return</span> <span class="keyword">this</span>-&gt;c;</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>    }</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>  } m_items;</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>};</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>}  <span class="comment">// namespace BT</span></div>
 <div class="ttc" id="aclass_b_t_1_1_timer_queue_html"><div class="ttname"><a href="../../df/d4c/class_b_t_1_1_timer_queue.html">BT::TimerQueue</a></div><div class="ttdef"><b>Definition:</b> timer_queue.h:77</div></div>
-<div class="ttc" id="aclass_b_t_1_1_timer_queue_html_a386ac8a89de8315a3f81cb5e88c30cac"><div class="ttname"><a href="../../df/d4c/class_b_t_1_1_timer_queue.html#a386ac8a89de8315a3f81cb5e88c30cac">BT::TimerQueue::add</a></div><div class="ttdeci">uint64_t add(std::chrono::milliseconds milliseconds, std::function&lt; void(bool)&gt; handler)</div><div class="ttdoc">Adds a new timer.</div><div class="ttdef"><b>Definition:</b> timer_queue.h:99</div></div>
-<div class="ttc" id="aclass_b_t_1_1_timer_queue_html_a5564436f2a8e071bfdf59be5daea279a"><div class="ttname"><a href="../../df/d4c/class_b_t_1_1_timer_queue.html#a5564436f2a8e071bfdf59be5daea279a">BT::TimerQueue::cancel</a></div><div class="ttdeci">size_t cancel(uint64_t id)</div><div class="ttdoc">Cancels the specified timer.</div><div class="ttdef"><b>Definition:</b> timer_queue.h:121</div></div>
-<div class="ttc" id="aclass_b_t_1_1_timer_queue_html_a663265e8c343946094e5d16a1b59d483"><div class="ttname"><a href="../../df/d4c/class_b_t_1_1_timer_queue.html#a663265e8c343946094e5d16a1b59d483">BT::TimerQueue::cancelAll</a></div><div class="ttdeci">size_t cancelAll()</div><div class="ttdoc">Cancels all timers.</div><div class="ttdef"><b>Definition:</b> timer_queue.h:158</div></div>
+<div class="ttc" id="aclass_b_t_1_1_timer_queue_html_a8bd9cbfcbf78991b017f9f7efe728149"><div class="ttname"><a href="../../df/d4c/class_b_t_1_1_timer_queue.html#a8bd9cbfcbf78991b017f9f7efe728149">BT::TimerQueue::cancelAll</a></div><div class="ttdeci">size_t cancelAll()</div><div class="ttdoc">Cancels all timers.</div><div class="ttdef"><b>Definition:</b> timer_queue.h:158</div></div>
+<div class="ttc" id="aclass_b_t_1_1_timer_queue_html_aa0f1e7533369e4f6bb2173d9e78d2259"><div class="ttname"><a href="../../df/d4c/class_b_t_1_1_timer_queue.html#aa0f1e7533369e4f6bb2173d9e78d2259">BT::TimerQueue::cancel</a></div><div class="ttdeci">size_t cancel(uint64_t id)</div><div class="ttdoc">Cancels the specified timer.</div><div class="ttdef"><b>Definition:</b> timer_queue.h:121</div></div>
+<div class="ttc" id="aclass_b_t_1_1_timer_queue_html_aab95a86842b3bee5395931409cd1abbe"><div class="ttname"><a href="../../df/d4c/class_b_t_1_1_timer_queue.html#aab95a86842b3bee5395931409cd1abbe">BT::TimerQueue::add</a></div><div class="ttdeci">uint64_t add(std::chrono::milliseconds milliseconds, std::function&lt; void(bool)&gt; handler)</div><div class="ttdoc">Adds a new timer.</div><div class="ttdef"><b>Definition:</b> timer_queue.h:99</div></div>
 <div class="ttc" id="aclass_b_t_1_1details_1_1_semaphore_html"><div class="ttname"><a href="../../d9/d24/class_b_t_1_1details_1_1_semaphore.html">BT::details::Semaphore</a></div><div class="ttdef"><b>Definition:</b> timer_queue.h:19</div></div>
-<div class="ttc" id="anamespace_b_t_1_1details_html"><div class="ttname"><a href="../../df/da8/namespace_b_t_1_1details.html">BT::details</a></div><div class="ttdoc">The SwitchNode is equivalent to a switch statement, where a certain branch (child) is executed accord...</div><div class="ttdef"><b>Definition:</b> basic_types.h:507</div></div>
+<div class="ttc" id="anamespace_b_t_1_1details_html"><div class="ttname"><a href="../../df/da8/namespace_b_t_1_1details.html">BT::details</a></div><div class="ttdoc">The SwitchNode is equivalent to a switch statement, where a certain branch (child) is executed accord...</div><div class="ttdef"><b>Definition:</b> basic_types.h:510</div></div>
 <div class="ttc" id="anamespace_b_t_html"><div class="ttname"><a href="../../d2/d8d/namespace_b_t.html">BT</a></div><div class="ttdef"><b>Definition:</b> action_node.h:25</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
